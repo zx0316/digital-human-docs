@@ -1,3 +1,20 @@
-# Prompt 规范
+# Prompt Design
 
-本文档描述数字人系统的 Prompt 设计规范。
+## Structure
+
+System:
+- persona
+- rules
+
+Memory:
+- retrieved context
+
+User:
+- current input
+
+---
+
+## Goal
+
+Generate natural, continuous conversation
+with emotional consistency.

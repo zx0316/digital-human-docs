@@ -1,3 +1,15 @@
-# 表情时间线
+# Expression Timeline
 
-本文档描述数字人系统的表情时间线管理。
+## Definition
+
+A unified time axis controlling:
+
+- audio
+- emotion
+- animation
+
+---
+
+## Rule
+
+Time is the single source of truth

@@ -1,3 +1,10 @@
-# 服务端架构
+# Server Architecture
 
-本文档描述数字人系统的服务端架构设计。
+## Modules
+
+- WebSocket Gateway
+- ASR Service
+- Agent Engine
+- LLM Connector
+- TTS Connector
+- Session Manager

@@ -1,19 +1,49 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "数字人消息 schema",
-  "description": "数字人系统消息结构定义",
-  "type": "object",
-  "properties": {
-    "type": {
-      "type": "string",
-      "enum": ["audio", "control", "state"]
+  "version": "1.0",
+  "messages": [
+    {
+      "type": "audio_chunk",
+      "direction": "client -> server",
+      "fields": {
+        "session_id": "string",
+        "timestamp": "int64",
+        "pcm": "base64",
+        "sample_rate": 16000
+      }
     },
-    "data": {
-      "type": "object"
+    {
+      "type": "asr_result",
+      "direction": "server internal",
+      "fields": {
+        "text": "string",
+        "confidence": "float"
+      }
     },
-    "timestamp": {
-      "type": "integer"
+    {
+      "type": "agent_request",
+      "direction": "server internal",
+      "fields": {
+        "text": "string",
+        "memory_context": "array",
+        "history": "array"
+      }
+    },
+    {
+      "type": "tts_chunk",
+      "direction": "server -> client",
+      "fields": {
+        "audio": "base64",
+        "emotion": "string",
+        "timeline_ts": "int64"
+      }
+    },
+    {
+      "type": "interrupt",
+      "direction": "client -> server",
+      "fields": {
+        "session_id": "string",
+        "reason": "user_speaking"
+      }
     }
-  },
-  "required": ["type", "data", "timestamp"]
+  ]
 }

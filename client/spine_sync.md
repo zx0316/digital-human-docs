@@ -1,3 +1,20 @@
-# 骨骼同步
+# Spine Sync Model
 
-本文档描述数字人系统的客户端骨骼同步机制。
+## Principle
+
+Audio time drives animation timeline
+
+---
+
+## Mapping
+
+- RMS → mouth open
+- emotion → facial state
+
+---
+
+## Update Loop
+
+while playing audio:
+    get audio timestamp
+    update spine pose

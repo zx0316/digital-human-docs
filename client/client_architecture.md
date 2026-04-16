@@ -1,3 +1,19 @@
-# 客户端架构
+# Client Architecture
 
-本文档描述数字人系统的客户端架构设计。
+## Modules
+
+### AudioCapture
+- PCM streaming
+- chunking (20ms)
+
+### Network
+- WebSocket client
+- reconnect
+
+### Player
+- streaming audio playback
+- buffer control
+
+### Render
+- Spine animation
+- emotion mapping
