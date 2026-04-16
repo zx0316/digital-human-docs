@@ -1,58 +1,108 @@
 {
-  "version": "2.0",
-  "description": "Digital Human Streaming Protocol",
+  "version": "3.0",
+  "description": "Digital Human Streaming Protocol (Low-latency, Interruptible)",
+  "core_principles": [
+    "Low latency",
+    "Interrupt capability",
+    "Streaming experience",
+    "Sequence control",
+    "Trace-based conversation"
+  ],
+  "envelope": {
+    "required": ["type", "session_id", "trace_id", "seq", "timestamp"],
+    "optional": ["debug"]
+  },
   "messages": [
     {
       "type": "audio_chunk",
       "direction": "client -> server",
-      "fields": {
-        "type": "audio_chunk",
-        "session_id": "string",
-        "timestamp": "int64",
-        "seq": "int",
-        "data": "base64"
+      "description": "Audio chunk from client",
+      "payload": {
+        "data": "base64",
+        "sample_rate": 16000,
+        "channels": 1
       }
+    },
+    {
+      "type": "asr_partial",
+      "direction": "server -> client",
+      "description": "Partial ASR result",
+      "payload": {
+        "text": "string",
+        "final": false
+      }
+    },
+    {
+      "type": "asr_final",
+      "direction": "server -> client",
+      "description": "Final ASR result",
+      "payload": {
+        "text": "string",
+        "final": true
+      }
+    },
+    {
+      "type": "llm_chunk",
+      "direction": "server -> client",
+      "description": "LLM streaming output",
+      "payload": {
+        "text": "string",
+        "end": false
+      }
+    },
+    {
+      "type": "llm_end",
+      "direction": "server -> client",
+      "description": "LLM streaming end",
+      "payload": {}
     },
     {
       "type": "tts_chunk",
       "direction": "server -> client",
-      "fields": {
-        "type": "tts_chunk",
-        "session_id": "string",
-        "seq": "int",
+      "description": "TTS streaming chunk",
+      "payload": {
         "data": "base64",
-        "end": "boolean"
+        "end": false
       }
+    },
+    {
+      "type": "tts_end",
+      "direction": "server -> client",
+      "description": "TTS streaming end",
+      "payload": {}
     },
     {
       "type": "interrupt",
       "direction": "client -> server",
-      "fields": {
-        "type": "interrupt",
-        "session_id": "string"
-      }
+      "description": "Interrupt current processing",
+      "payload": {}
     }
   ],
-  "data_types": {
-    "AudioChunk": {
-      "SessionID": "string",
-      "Seq": "int",
-      "Data": "[]byte"
-    },
-    "TextChunk": {
-      "SessionID": "string",
-      "Text": "string",
-      "Final": "boolean"
-    },
-    "TTSChunk": {
-      "SessionID": "string",
-      "Seq": "int",
-      "Data": "[]byte",
-      "End": "boolean"
-    }
+  "field_explanation": {
+    "session_id": "会话 ID，整个对话过程保持不变",
+    "trace_id": "一轮对话的 ID，每次提问都会变化",
+    "seq": "顺序控制，每流独立递增",
+    "timestamp": "客户端时间戳",
+    "type": "消息类型",
+    "payload": "消息内容",
+    "debug": "调试信息，包含各阶段延迟"
   },
-  "pipeline": {
-    "stages": ["asr", "agent", "llm", "tts"],
-    "data_flow": "audio → asr → agent → llm → tts → output"
+  "design_points": {
+    "audio": "每 20ms 一个 chunk，seq 单调递增",
+    "asr": "partial 可以覆盖，client 用最新 partial 覆盖显示",
+    "llm": "边生成边 TTS，不需要等 LLM 完成",
+    "tts": "比 LLM 慢一点点，但不能等 LLM 完成",
+    "interrupt": "cancel 当前 pipeline，停止所有处理，丢弃未发送 chunk"
+  },
+  "latency_model": {
+    "audio_upload": "~50ms",
+    "asr_partial": "100~300ms",
+    "llm_first_token": "300~800ms",
+    "tts_first_packet": "500~1000ms",
+    "target": "用户开口 → 听到回复 < 1s"
+  },
+  "debug_structure": {
+    "stage": "string",
+    "latency_ms": "number"
   }
 }
