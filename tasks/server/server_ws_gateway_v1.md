@@ -51,12 +51,12 @@
 
 ## Trae Prompt
 
-实现一个 C++ WebSocket 服务端网关模块：
+实现一个 Go WebSocket 服务端网关模块：
 
 - 输入：客户端 WebSocket 连接、消息
 - 输出：消息路由、会话管理
 - 支持多客户端连接
-- 代码结构清晰（class + interface）
+- 代码结构清晰（package + interface）
 
 参考：
 - protocol/message_schema.json

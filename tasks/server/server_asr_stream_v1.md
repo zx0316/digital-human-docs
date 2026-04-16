@@ -50,12 +50,12 @@
 
 ## Trae Prompt
 
-实现一个 C++ ASR 流式识别模块：
+实现一个 Go ASR 流式识别模块：
 
 - 输入：客户端音频流
 - 输出：识别文本、置信度
 - 支持流式处理、低延迟
-- 代码结构清晰（class + interface）
+- 代码结构清晰（package + interface）
 
 参考：
 - server/asr_integration.md

@@ -52,12 +52,12 @@
 
 ## Trae Prompt
 
-实现一个 C++ 系统记忆管理模块：
+实现一个 Go 系统记忆管理模块：
 
 - 输入：会话数据、用户输入、系统响应
 - 输出：记忆存储、记忆检索
 - 支持短期和长期记忆、语义检索
-- 代码结构清晰（class + interface）
+- 代码结构清晰（package + interface）
 
 参考：
 - agent/memory_spec.md

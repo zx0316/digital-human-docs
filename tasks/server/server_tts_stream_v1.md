@@ -51,12 +51,12 @@
 
 ## Trae Prompt
 
-实现一个 C++ TTS 流式合成模块：
+实现一个 Go TTS 流式合成模块：
 
 - 输入：Agent 响应文本、情绪信息
 - 输出：合成音频流、情绪标记
 - 支持流式处理、低延迟
-- 代码结构清晰（class + interface）
+- 代码结构清晰（package + interface）
 
 参考：
 - server/tts_integration.md

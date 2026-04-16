@@ -54,12 +54,12 @@
 
 ## Trae Prompt
 
-实现一个 C++ Agent 模块：
+实现一个 Go Agent 模块：
 
 - 输入：识别文本、记忆上下文、会话历史
 - 输出：响应文本、情绪、意图
 - 支持记忆检索、prompt 构建
-- 代码结构清晰（class + interface）
+- 代码结构清晰（package + interface）
 
 参考：
 - agent/agent_design.md

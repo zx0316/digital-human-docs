@@ -12,15 +12,22 @@
 
 ---
 
+## 技术栈
+
+- **客户端**：C++（跨平台高性能音频处理、Spine渲染）
+- **服务端**：Go（高并发WebSocket、AI Pipeline处理）
+
+---
+
 ## 系统构成
 
-Client:
+Client (C++):
 - 音频采集
 - 实时播放
 - Spine渲染
 - WebSocket通信
 
-Server:
+Server (Go):
 - ASR（语音识别）
 - Agent（记忆 + prompt + 决策）
 - LLM（对话生成）

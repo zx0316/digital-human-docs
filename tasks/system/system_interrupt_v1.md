@@ -51,12 +51,12 @@
 
 ## Trae Prompt
 
-实现一个 C++ 系统中断处理模块：
+实现一个 Go 系统中断处理模块：
 
 - 输入：客户端中断请求、服务端处理状态
 - 输出：中断处理结果、会话状态重置
 - 支持快速响应、幂等性
-- 代码结构清晰（class + interface）
+- 代码结构清晰（package + interface）
 
 参考：
 - dataflow/interrupt_flow.md
