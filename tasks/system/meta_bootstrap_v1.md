@@ -1,127 +1,97 @@
 # Meta Task: system_bootstrap_v1
 
-## Goal
+## 🎯 任务目标
 
-基于 digital-human-docs，生成完整的：
+实现数字人系统 MVP，打通端云协同基础链路：
 
-- client 工程骨架（C++）
-- server 工程骨架（Python / Node 均可）
-- 基础链路打通（WebSocket + audio_chunk）
-
----
-
-## Context
-
-阅读以下文档：
-
-- architecture/overview.md
-- protocol/message_schema.json
-- dataflow/realtime_pipeline.md
-- client/client_architecture.md
-- server/server_architecture.md
+- 客户端（C++）↔ 服务端（Go）WebSocket 双向通信
+- audio_chunk 传输 → tts_chunk 返回
+- 全链路流式处理能力
 
 ---
 
-## Output
+## 📁 输出要求
 
-生成两个独立工程：
+### 1️⃣ 客户端仓库
 
-### 1️⃣ client
+- **路径**：`/Users/matrix/Work/Github/digital-human-client`
+- **语言**：C++
 
-结构：
+**核心模块**：
+- audio/ - 音频采集
+- network/ - WebSocket 通信
+- player/ - 音频播放
+- core/ - 会话管理
+- main/ - 程序入口
 
-client/
-├── audio/
-├── network/
-├── player/
-├── render/
-└── main/
+### 2️⃣ 服务端仓库
 
----
+- **路径**：`/Users/matrix/Work/Github/digital-human-server`
+- **语言**：Go
 
-### 2️⃣ server
-
-结构：
-
-server/
-├── ws/
-├── asr/
-├── agent/
-├── llm/
-├── tts/
-└── session/
+**核心模块**：
+- ws/ - WebSocket 服务器
+- session/ - 会话管理
+- pipeline/ - 处理管道（后续扩展）
 
 ---
 
-## Requirements
+## ✅ 验收标准
 
-### Client
-
-- 实现 AudioCapture（mock也可以）
-- 实现 WebSocket client
-- 每20ms发送 audio_chunk
-- 支持 session_id
-
----
-
-### Server
-
-- WebSocket server
-- 接收 audio_chunk
-- 打印日志（模拟ASR）
-- 返回 mock tts_chunk
+- 客户端能连接服务端
+- 客户端持续发送 audio_chunk
+- 服务端能接收并处理
+- 服务端返回 tts_chunk
+- 全链路稳定运行
 
 ---
 
-## Protocol Constraint
+## 📋 关键约束
 
-严格使用：
-
-protocol/message_schema.json
-
----
-
-## Acceptance Criteria
-
-- client 能连接 server
-- client 持续发送 audio_chunk
-- server 能收到并打印
-- server 能返回 tts_chunk
-- client 能接收并打印
+- 严格遵守 `protocol/message_schema.json`
+- 保持 streaming 优先设计
+- 支持 session_id 和 trace_id
+- 可中断设计（interrupt 支持）
 
 ---
 
-## Non-Goals
+## 📚 参考文档
 
-- 不实现真实 ASR
-- 不实现真实 TTS
-- 不实现 UI
+- `architecture/overview.md` - 系统架构
+- `protocol/message_schema.json` - 协议定义
+- `dataflow/realtime_pipeline.md` - 数据流设计
+- `client/client_architecture.md` - 客户端架构
+- `server/server_architecture.md` - 服务端架构
 
 ---
 
-## Trae Prompt（核心）
+## 🔄 开发流程
 
-你是一个全栈系统工程师。
+1. **阅读参考文档**：理解系统架构和协议设计
+2. **实现客户端**：在 `digital-human-client` 实现各模块
+3. **实现服务端**：在 `digital-human-server` 实现各模块
+4. **联调测试**：打通端云链路
+5. **提交推送**：代码提交到 GitHub
 
-请根据 digital-human-docs：
+---
 
-1. 生成 client（C++）和 server（Node.js 或 Python）
-2. 按模块划分代码结构
-3. 实现 WebSocket 双向通信
-4. client 每20ms发送 audio_chunk
-5. server 返回 mock tts_chunk
-6. 所有代码可运行
+## 🚀 提交指南
 
-要求：
+```bash
+# 客户端
+cd /Users/matrix/Work/Github/digital-human-client
+git add . && git commit -m "feat: MVP implementation" && git push
 
-- 不写伪代码
-- 提供完整文件结构
-- 每个模块有清晰职责
-- 严格遵守 protocol/message_schema.json
+# 服务端
+cd /Users/matrix/Work/Github/digital-human-server
+git add . && git commit -m "feat: MVP implementation" && git push
+```
 
-输出：
+---
 
-- client 完整代码
-- server 完整代码
-- 运行说明
-- 运行说明
+## 🔮 后续任务
+
+- `tasks/server/server_asr_stream_v1.md` - ASR 集成
+- `tasks/server/server_tts_stream_v1.md` - TTS 集成
+- `tasks/server/server_agent_v1.md` - Agent 实现
+- `tasks/system/system_interrupt_v1.md` - 中断功能

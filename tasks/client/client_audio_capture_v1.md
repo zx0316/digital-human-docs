@@ -8,41 +8,43 @@
 
 ## Input
 
-- 麦克风输入
+- 系统音频设备（麦克风）
 
 ---
 
 ## Output
 
-- PCM 音频数据（16kHz，20ms chunk）
+- audio_chunk (PCM 16kHz, 20ms)
 
 ---
 
 ## Dependencies
 
-- client/audio_pipeline.md
+- protocol/message_schema.json
+- client/client_architecture.md
 
 ---
 
 ## Requirements
 
-- 支持 16kHz 采样率
-- 支持 20ms 音频块
+- 16kHz 采样率
+- 20ms chunk 大小
 - 低延迟采集
+- 支持开始/停止控制
 
 ---
 
 ## Non-Goals
 
-- 不实现音频处理
+- 不实现音频编码
 - 不实现网络传输
 
 ---
 
 ## Acceptance Criteria
 
-- 可以稳定采集音频
-- 输出格式符合要求
+- 可以采集音频数据
+- 每 20ms 输出一帧
 
 ---
 
@@ -50,10 +52,11 @@
 
 实现一个 C++ 音频采集模块：
 
-- 输入：麦克风
-- 输出：PCM 音频流（16kHz，20ms 一帧）
-- 支持跨平台（Windows/macOS/Linux）
+- 输入：系统麦克风
+- 输出：PCM 16kHz 音频块（20ms）
+- 支持开始/停止控制
 - 代码结构清晰（class + interface）
 
 参考：
-- client/audio_pipeline.md
+- protocol/message_schema.json (v3.0)
+- client/client_architecture.md

@@ -8,23 +8,23 @@
 
 ## Input
 
-- 识别文本
-- 记忆上下文
-- 会话历史
+- asr_final 文本
+- memory_context
+- session_history
 
 ---
 
 ## Output
 
-- 响应文本
-- 情绪
-- 意图
+- LLM 响应文本
+- emotion 信息
 
 ---
 
 ## Dependencies
 
-- server/llm_integration.md
+- protocol/message_schema.json
+- server/server_architecture.md
 - agent/agent_design.md
 - agent/memory_spec.md
 
@@ -32,23 +32,27 @@
 
 ## Requirements
 
-- 支持记忆检索
+- 支持 memory 检索
 - 支持 prompt 构建
 - 支持 LLM 调用
+- 输出结构化响应
 
 ---
 
 ## Non-Goals
 
-- 不实现 LLM 模型
-- 不实现 ASR/TTS
+- 不实现 LLM（采用第三方 LLM 服务）
+- 不实现 ASR
+- 不实现 TTS
 
 ---
 
 ## Acceptance Criteria
 
-- 可以生成合理响应
-- 可以管理记忆
+- 可以检索 memory
+- 可以构建 prompt
+- 可以调用 LLM
+- 可以输出结构化响应
 
 ---
 
@@ -56,10 +60,14 @@
 
 实现一个 Go Agent 模块：
 
-- 输入：识别文本、记忆上下文、会话历史
-- 输出：响应文本、情绪、意图
-- 支持记忆检索、prompt 构建
+- 输入：文本、memory、history
+- 输出：LLM 响应、emotion
+- 支持 memory 检索
+- 支持 prompt 构建
 - 代码结构清晰（package + interface）
 
 参考：
+- protocol/message_schema.json (v3.0)
+- server/server_architecture.md
 - agent/agent_design.md
+- agent/memory_spec.md

@@ -2,49 +2,52 @@
 
 ## Goal
 
-实现客户端音频播放模块
+实现客户端音频播放模块（带背压控制）
 
 ---
 
 ## Input
 
-- 服务端返回的音频数据
-- 情绪信息
+- tts_chunk 消息
+- session_id
+- trace_id
 
 ---
 
 ## Output
 
 - 音频播放
-- 播放状态
+- 背压控制
 
 ---
 
 ## Dependencies
 
-- client/audio_pipeline.md
+- protocol/message_schema.json
+- client/client_architecture.md
 
 ---
 
 ## Requirements
 
 - 支持流式播放
-- 支持低延迟
-- 支持音频缓冲控制
+- 实现 jitter buffer
+- 背压控制（MAX_BUFFER_MS = 500）
+- 支持 interrupt 停止播放
 
 ---
 
 ## Non-Goals
 
-- 不实现音频采集
-- 不实现网络传输
+- 不实现音频解码
 
 ---
 
 ## Acceptance Criteria
 
-- 可以流畅播放音频
-- 支持实时中断
+- 可以播放音频流
+- 缓冲区超限时自动丢帧
+- interrupt 可以立即停止播放
 
 ---
 
@@ -52,10 +55,12 @@
 
 实现一个 C++ 音频播放模块：
 
-- 输入：服务端返回的音频数据
+- 输入：tts_chunk 音频流
 - 输出：音频播放
-- 支持流式播放、低延迟
+- 实现 jitter buffer 和背压控制
+- 支持立即停止（interrupt）
 - 代码结构清晰（class + interface）
 
 参考：
-- client/audio_pipeline.md
+- protocol/message_schema.json (v3.0)
+- client/client_architecture.md

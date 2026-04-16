@@ -2,49 +2,50 @@
 
 ## Goal
 
-实现客户端 Spine 骨骼同步模块
+实现客户端 Spine 动画同步模块
 
 ---
 
 ## Input
 
-- 音频时间戳
-- 情绪信息
+- tts_chunk 消息（包含时间戳）
+- emotion 信息
 
 ---
 
 ## Output
 
-- Spine 动画状态
+- Spine 动画控制
+- 表情同步
 
 ---
 
 ## Dependencies
 
-- client/spine_sync.md
-- client/render_pipeline.md
+- protocol/message_schema.json
+- client/client_architecture.md
+- timeline/expression_timeline.md
 
 ---
 
 ## Requirements
 
-- 支持音频驱动动画
-- 支持情绪映射
-- 实时同步
+- 音频时间驱动动画
+- emotion 映射到表情
+- 与音频播放同步
 
 ---
 
 ## Non-Goals
 
-- 不实现 Spine 渲染
 - 不实现音频播放
 
 ---
 
 ## Acceptance Criteria
 
+- 可以根据 emotion 显示对应表情
 - 动画与音频同步
-- 情绪表现正确
 
 ---
 
@@ -52,10 +53,13 @@
 
 实现一个 C++ Spine 同步模块：
 
-- 输入：音频时间戳、情绪信息
-- 输出：Spine 动画状态
-- 支持音频驱动、情绪映射
+- 输入：tts_chunk、emotion 信息
+- 输出：Spine 动画控制
+- 实现音频时间驱动动画
+- 实现 emotion → 表情映射
 - 代码结构清晰（class + interface）
 
 参考：
-- client/spine_sync.md
+- protocol/message_schema.json (v3.0)
+- client/client_architecture.md
+- timeline/expression_timeline.md
