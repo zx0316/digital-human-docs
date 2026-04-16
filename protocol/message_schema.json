@@ -1,49 +1,58 @@
 {
-  "version": "1.0",
+  "version": "2.0",
+  "description": "Digital Human Streaming Protocol",
   "messages": [
     {
       "type": "audio_chunk",
       "direction": "client -> server",
       "fields": {
+        "type": "audio_chunk",
         "session_id": "string",
         "timestamp": "int64",
-        "pcm": "base64",
-        "sample_rate": 16000
-      }
-    },
-    {
-      "type": "asr_result",
-      "direction": "server internal",
-      "fields": {
-        "text": "string",
-        "confidence": "float"
-      }
-    },
-    {
-      "type": "agent_request",
-      "direction": "server internal",
-      "fields": {
-        "text": "string",
-        "memory_context": "array",
-        "history": "array"
+        "seq": "int",
+        "data": "base64"
       }
     },
     {
       "type": "tts_chunk",
       "direction": "server -> client",
       "fields": {
-        "audio": "base64",
-        "emotion": "string",
-        "timeline_ts": "int64"
+        "type": "tts_chunk",
+        "session_id": "string",
+        "seq": "int",
+        "data": "base64",
+        "end": "boolean"
       }
     },
     {
       "type": "interrupt",
       "direction": "client -> server",
       "fields": {
-        "session_id": "string",
-        "reason": "user_speaking"
+        "type": "interrupt",
+        "session_id": "string"
       }
     }
-  ]
+  ],
+  "data_types": {
+    "AudioChunk": {
+      "SessionID": "string",
+      "Seq": "int",
+      "Data": "[]byte"
+    },
+    "TextChunk": {
+      "SessionID": "string",
+      "Text": "string",
+      "Final": "boolean"
+    },
+    "TTSChunk": {
+      "SessionID": "string",
+      "Seq": "int",
+      "Data": "[]byte",
+      "End": "boolean"
+    }
+  },
+  "pipeline": {
+    "stages": ["asr", "agent", "llm", "tts"],
+    "data_flow": "audio → asr → agent → llm → tts → output"
+  }
 }
