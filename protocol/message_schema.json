@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "数字人消息 schema",
+  "description": "数字人系统消息结构定义",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["audio", "control", "state"]
+    },
+    "data": {
+      "type": "object"
+    },
+    "timestamp": {
+      "type": "integer"
+    }
+  },
+  "required": ["type", "data", "timestamp"]
+}
